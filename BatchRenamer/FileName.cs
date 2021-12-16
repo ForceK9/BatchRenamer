@@ -58,7 +58,7 @@ namespace BatchRenamer
             _savedName = FullName;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Extension"));
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FullName"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FullName"));
         }
     }
 }

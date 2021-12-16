@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatchRenamer.RenamingOperators
 {
-    public interface IRenamingOperator
+    public interface IFileRenamingOperator
     {
         public void Rename(ICollection<FileName> fileNames);
     }

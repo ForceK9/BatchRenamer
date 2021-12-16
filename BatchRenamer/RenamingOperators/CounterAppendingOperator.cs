@@ -2,7 +2,7 @@
 
 namespace BatchRenamer.RenamingOperators
 {
-    public class CounterAppendingOperator : IRenamingOperator
+    public class CounterAppendingOperator : IFileRenamingOperator
     {
         // TODO: modify to allow specifying start, steps and number of digits
         public void Rename(ICollection<FileName> fileNames)
