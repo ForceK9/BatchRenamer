@@ -25,8 +25,31 @@
                                  Title="Files To Rename">
                 <local:CustomListBox.Header>
                     <StackPanel>
+                        <!--Button Template="{StaticResource SortBtnTemplate}"
+                                ToolTip="Sort by"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Sort by Name"/>
+                                    <MenuItem Header="Sort by Date modified"/>
+                                    <MenuItem Header="Sort by Size"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add file(s)..."/>
+                                    <MenuItem Header="Add files recursively..."/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button-->
                         <Button Template="{StaticResource SortBtnTemplate}"
-                                ToolTip="Sort by"/>
+                                ToolTip="Sort by Name"/>
                         <Button Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"/>
                         <Button Template="{StaticResource ToStorageBtnTemplate}"
@@ -46,6 +69,17 @@
                                  Title="Storage">
                 <local:CustomListBox.Header>
                     <StackPanel>
+                        <!--Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add file(s)..."/>
+                                    <MenuItem Header="Add files recursively..."/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button-->
                         <Button Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"/>
                         <Button Template="{StaticResource ToListBtnTemplate}"
