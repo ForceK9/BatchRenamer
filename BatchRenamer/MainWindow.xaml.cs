@@ -23,11 +23,12 @@ namespace BatchRenamer
     /// </summary>
     public partial class MainWindow : Window
     {
-        FileNameListManager _fileManager = new FileNameListManager();
+        FileNameListManager activeFileList = new FileNameListManager();
+        FileNameListManager reserveFileList = new FileNameListManager();
         public MainWindow()
         {
             InitializeComponent();
-            _fileManager.ProvideItemSource(listBoxOfFiles);
+            activeFileList.ProvideItemSource(listBoxOfFiles);
             //listBoxOfFiles.ItemsSource = _fileManager._list;
         }
 
@@ -41,7 +42,7 @@ namespace BatchRenamer
                 foreach (string filename in ofd.FileNames)
                 {
                     FileName fileName = new FileName(filename);
-                    _fileManager.Add(fileName);
+                    activeFileList.Add(fileName);
                 }
             }
         }
@@ -53,8 +54,8 @@ namespace BatchRenamer
             if (result == MessageBoxResult.Yes)
             {
                 CounterAppendingOperator opt = new CounterAppendingOperator();
-                _fileManager.ApplyRenamingOperator(opt);
-                _fileManager.SaveAll();
+                activeFileList.ApplyRenamingOperator(opt);
+                activeFileList.SaveAll();
                 MessageBox.Show("Renaming completed.");
             }
         }

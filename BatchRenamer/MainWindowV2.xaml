@@ -1,0 +1,99 @@
+﻿<Window x:Class="BatchRenamer.MainWindowV2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRenamer"
+        mc:Ignorable="d"
+        Title="BatchRenamer" Height="575" Width="1000" 
+        Background="WhiteSmoke">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:CustomListBox Grid.Row="0"
+                                 Margin="0,0,0,10"
+                                 Title="Files To Rename">
+                <local:CustomListBox.Header>
+                    <StackPanel>
+                        <Button Template="{StaticResource SortBtnTemplate}"
+                                ToolTip="Sort by"/>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"/>
+                        <Button Template="{StaticResource ToStorageBtnTemplate}"
+                                ToolTip="Move to Storage"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Remove"/>
+                    </StackPanel>
+                </local:CustomListBox.Header>
+                <local:CustomListBox.ListBoxContent>
+                    <ListBox>
+
+                    </ListBox>
+                </local:CustomListBox.ListBoxContent>
+            </local:CustomListBox>
+            <local:CustomListBox Grid.Row="1"
+                                 Margin="0,10,0,0"
+                                 Title="Storage">
+                <local:CustomListBox.Header>
+                    <StackPanel>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"/>
+                        <Button Template="{StaticResource ToListBtnTemplate}"
+                                ToolTip="Move to Files To Rename"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Remove"/>
+                    </StackPanel>
+                </local:CustomListBox.Header>
+                <local:CustomListBox.ListBoxContent>
+                    <ListBox>
+
+                    </ListBox>
+                </local:CustomListBox.ListBoxContent>
+            </local:CustomListBox>
+        </Grid>
+        <Grid Grid.Column="1"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <local:CustomListBox Grid.Row="0"
+                                 Margin="0,0,0,10"
+                                 Title="Renaming Recipe">
+                <local:CustomListBox.Header>
+                    <StackPanel>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add Operation(s)"/>
+                        <Button Template="{StaticResource SaveBtnTemplate}"
+                                ToolTip="Save Recipe"/>
+                        <Button Template="{StaticResource LoadBtnTemplate}"
+                                ToolTip="Load Recipe"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Clear Recipe"/>
+                    </StackPanel>
+                </local:CustomListBox.Header>
+                <local:CustomListBox.ListBoxContent>
+                    <ListBox>
+
+                    </ListBox>
+                </local:CustomListBox.ListBoxContent>
+            </local:CustomListBox>
+            <Button Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Width="120"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    Content="RENAME!"/>
+        </Grid>
+    </Grid>
+</Window>

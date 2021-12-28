@@ -44,7 +44,7 @@ namespace BatchRenamer
                 _list.Add(newItem);
             }
         }
-        public void Remove(int index)
+        public void RemoveAt(int index)
         {
             _list.RemoveAt(index);
         }

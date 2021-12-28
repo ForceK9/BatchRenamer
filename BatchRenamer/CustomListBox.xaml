@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="BatchRenamer.CustomListBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BatchRenamer"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="485"
+             Background="#FFDDDDDD"
+             BorderBrush="Black"
+             BorderThickness="1">
+    <UserControl.Resources>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <ControlTemplate x:Key="AddBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-add.png"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="TrashBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-trash.png"
+                           Height="25" Width="25"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ToStorageBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-arrow-down.png"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ToListBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-arrow-up.png"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SortBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-sort.png"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SaveBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-floppy.png"
+                           Height="25" Width="25"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="LoadBtnTemplate" TargetType="Button">
+            <Button>
+                <Button.Content>
+                    <Image Source="/resources/icon-load.png"
+                           Height="25" Width="25"/>
+                </Button.Content>
+            </Button>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top"
+                       Height="35">
+            <Label DockPanel.Dock="Left"
+                   Margin="5,0,0,0"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Content="{Binding Title,
+                RelativeSource={RelativeSource AncestorType={x:Type local:CustomListBox}}}"/>
+            <ContentControl DockPanel.Dock="Right"
+                        Content="{Binding Header, 
+               RelativeSource={RelativeSource AncestorType={x:Type local:CustomListBox}}}"/>
+        </DockPanel>
+        <ContentControl DockPanel.Dock="Bottom"
+                        Content="{Binding ListBoxContent, 
+               RelativeSource={RelativeSource AncestorType={x:Type local:CustomListBox}}}"/>
+    </DockPanel>
+</UserControl>
