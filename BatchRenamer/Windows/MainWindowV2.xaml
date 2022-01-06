@@ -3,11 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BatchRenamer"
+        xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
         Title="BatchRenamer" Height="575" Width="1000" 
         Background="WhiteSmoke">
     <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary 
+                    Source="/Controls/CustomListBoxTemplate.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -20,10 +27,11 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <local:CustomListBox Grid.Row="0"
+            <ctrl:CustomListBox x:Name="boxActive" 
+                                 Grid.Row="0"
                                  Margin="0,0,0,10"
-                                 Title="Files To Rename">
-                <local:CustomListBox.Header>
+                                 Header="Files To Rename">
+                <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource SortBtnTemplate}"
                                 ToolTip="Sort by"
@@ -48,7 +56,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button-->
-                        <Button Template="{StaticResource SortBtnTemplate}"
+                        <Button Name="btnAddActive" Template="{StaticResource SortBtnTemplate}"
                                 ToolTip="Sort by Name"/>
                         <Button Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"/>
@@ -57,17 +65,13 @@
                         <Button Template="{StaticResource TrashBtnTemplate}"
                                 ToolTip="Remove"/>
                     </StackPanel>
-                </local:CustomListBox.Header>
-                <local:CustomListBox.ListBoxContent>
-                    <ListBox>
-
-                    </ListBox>
-                </local:CustomListBox.ListBoxContent>
-            </local:CustomListBox>
-            <local:CustomListBox Grid.Row="1"
+                </ctrl:CustomListBox.ToolBar>
+            </ctrl:CustomListBox>
+            <ctrl:CustomListBox x:Name="boxStorage" 
+                                 Grid.Row="1"
                                  Margin="0,10,0,0"
-                                 Title="Storage">
-                <local:CustomListBox.Header>
+                                 Header="Storage">
+                <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
@@ -87,13 +91,8 @@
                         <Button Template="{StaticResource TrashBtnTemplate}"
                                 ToolTip="Remove"/>
                     </StackPanel>
-                </local:CustomListBox.Header>
-                <local:CustomListBox.ListBoxContent>
-                    <ListBox>
-
-                    </ListBox>
-                </local:CustomListBox.ListBoxContent>
-            </local:CustomListBox>
+                </ctrl:CustomListBox.ToolBar>
+            </ctrl:CustomListBox>
         </Grid>
         <Grid Grid.Column="1"
               Margin="10">
@@ -101,10 +100,10 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <local:CustomListBox Grid.Row="0"
+            <ctrl:CustomListBox x:Name="boxRecipe"  Grid.Row="0"
                                  Margin="0,0,0,10"
-                                 Title="Renaming Recipe">
-                <local:CustomListBox.Header>
+                                 Header="Renaming Recipe">
+                <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <Button Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add Operation(s)"/>
@@ -115,13 +114,8 @@
                         <Button Template="{StaticResource TrashBtnTemplate}"
                                 ToolTip="Clear Recipe"/>
                     </StackPanel>
-                </local:CustomListBox.Header>
-                <local:CustomListBox.ListBoxContent>
-                    <ListBox>
-
-                    </ListBox>
-                </local:CustomListBox.ListBoxContent>
-            </local:CustomListBox>
+                </ctrl:CustomListBox.ToolBar>
+            </ctrl:CustomListBox>
             <Button Grid.Row="1"
                     Margin="0,10,0,0"
                     Width="120"

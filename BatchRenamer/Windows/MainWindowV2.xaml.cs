@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BatchRenamer.Logic;
+using BatchRenamer.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,13 @@ namespace BatchRenamer
     /// </summary>
     public partial class MainWindowV2 : Window
     {
+        FileNameListManager activeList = new FileNameListManager();
+        FileNameListManager storageList = new FileNameListManager();
         public MainWindowV2()
         {
             InitializeComponent();
+            activeList.ProvideItemSource(boxActive);
+            storageList.ProvideItemSource(boxStorage);
         }
     }
 }

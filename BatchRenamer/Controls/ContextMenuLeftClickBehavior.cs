@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace BatchRenamer
+namespace BatchRenamer.Controls
 {
     public static class ContextMenuLeftClickBehavior
     {

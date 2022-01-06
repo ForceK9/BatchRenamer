@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\icon-add.png" />
-    <None Remove="resources\icon-arrow-down.png" />
-    <None Remove="resources\icon-arrow-up.png" />
-    <None Remove="resources\icon-floppy.png" />
-    <None Remove="resources\icon-load.png" />
-    <None Remove="resources\icon-sort.png" />
-    <None Remove="resources\icon-trash.png" />
+    <None Remove="Resources\icon-add.png" />
+    <None Remove="Resources\icon-arrow-down.png" />
+    <None Remove="Resources\icon-arrow-up.png" />
+    <None Remove="Resources\icon-floppy.png" />
+    <None Remove="Resources\icon-load.png" />
+    <None Remove="Resources\icon-sort.png" />
+    <None Remove="Resources\icon-trash.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,25 +23,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\icon-add.png">
+    <Resource Include="Resources\icon-add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-arrow-down.png">
+    <Resource Include="Resources\icon-arrow-down.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-arrow-up.png">
+    <Resource Include="Resources\icon-arrow-up.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-floppy.png">
+    <Resource Include="Resources\icon-floppy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-load.png">
+    <Resource Include="Resources\icon-load.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-sort.png">
+    <Resource Include="Resources\icon-sort.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\icon-trash.png">
+    <Resource Include="Resources\icon-trash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

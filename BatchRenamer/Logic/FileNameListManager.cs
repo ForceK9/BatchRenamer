@@ -1,4 +1,4 @@
-﻿using BatchRenamer.RenamingOperators;
+﻿using BatchRenamer.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace BatchRenamer
+namespace BatchRenamer.Logic
 {
     internal class FileNameListManager
     {

@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BatchRenamer.RenamingOperators;
+using BatchRenamer.Core;
+using BatchRenamer.Logic;
 using Microsoft.Win32;
 
 namespace BatchRenamer

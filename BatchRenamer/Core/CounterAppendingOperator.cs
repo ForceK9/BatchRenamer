@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BatchRenamer.RenamingOperators
+namespace BatchRenamer.Core
 {
     public class CounterAppendingOperator : IFileRenamingOperator
     {
