@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
         Title="BatchRenamer" Height="575" Width="1000" 
@@ -28,9 +29,12 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <ctrl:CustomListBox x:Name="boxActive" 
-                                 Grid.Row="0"
-                                 Margin="0,0,0,10"
-                                 Header="Files To Rename">
+                                Grid.Row="0"
+                                Margin="0,0,0,10"
+                                Header="Files To Rename"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource SortBtnTemplate}"
@@ -56,21 +60,59 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button-->
-                        <Button Name="btnAddActive" Template="{StaticResource SortBtnTemplate}"
+                        <Button Template="{StaticResource SortBtnTemplate}"
                                 ToolTip="Sort by Name"/>
-                        <Button Template="{StaticResource AddBtnTemplate}"
-                                ToolTip="Add file(s)"/>
+                        <Button Name="addBtnActive" 
+                                Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                Click="AddBtnActive_Click"/>
                         <Button Template="{StaticResource ToStorageBtnTemplate}"
                                 ToolTip="Move to Storage"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
                                 ToolTip="Remove"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
+                <ctrl:CustomListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FFDDDDDD"
+                                BorderThickness="0,0,0,1"
+                                Width="{Binding Path=ViewportWidth,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
+                            <!--Put list index here, somehow-->
+                            <DockPanel Height="45">
+                                <Border DockPanel.Dock="Left"
+                                    Width="40"
+                                    BorderBrush="#FFDDDDDD"
+                                    BorderThickness="0,0,1,0">
+                                    <!--Put list index here, somehow-->
+                                </Border>
+                                <TextBlock DockPanel.Dock="Top"
+                                       Margin="5,5,5,0">
+                                <Run Text="{Binding Path=Name, Mode=OneWay}"/><Run Text="{Binding Path=Extension, Mode=OneWay}"/>
+                                </TextBlock>
+                                <Label DockPanel.Dock="Bottom">
+                                    <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Left">
+                                        <Image Source="{StaticResource icon-arrow-right}"
+                                           VerticalAlignment="Center"/>
+                                        <TextBlock Margin="5,0,5,0"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding FullName}"
+                                               TextWrapping="WrapWithOverflow"/>
+                                    </StackPanel>
+                                </Label>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ctrl:CustomListBox.ItemTemplate>
             </ctrl:CustomListBox>
             <ctrl:CustomListBox x:Name="boxStorage" 
-                                 Grid.Row="1"
-                                 Margin="0,10,0,0"
-                                 Header="Storage">
+                                Grid.Row="1"
+                                Margin="0,10,0,0"
+                                Header="Storage"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource AddBtnTemplate}"
@@ -84,7 +126,8 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button-->
-                        <Button Template="{StaticResource AddBtnTemplate}"
+                        <Button Name="addBtnStorage"
+                                Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"/>
                         <Button Template="{StaticResource ToListBtnTemplate}"
                                 ToolTip="Move to Files To Rename"/>
@@ -92,6 +135,27 @@
                                 ToolTip="Remove"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
+                <ctrl:CustomListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Height="50">
+                            <Border DockPanel.Dock="Left"
+                                    Width="30"
+                                    BorderBrush="#FFDDDDDD"
+                                    BorderThickness="0,0,1,0">
+                                <!--Put list index here, somehow-->
+                            </Border>
+                            <TextBlock DockPanel.Dock="Top" Height="20">
+                                <Run Text="{Binding Path=Name, Mode=OneWay}"/><Run Text="{Binding Path=Extension, Mode=OneWay}"/>
+                            </TextBlock>
+                            <Label>
+                                <StackPanel>
+                                    <Image Source="{StaticResource icon-arrow-up}"/>
+                                    <TextBlock Text="{Binding FullName}"/>
+                                </StackPanel>
+                            </Label>
+                        </DockPanel>
+                    </DataTemplate>
+                </ctrl:CustomListBox.ItemTemplate>
             </ctrl:CustomListBox>
         </Grid>
         <Grid Grid.Column="1"
@@ -116,12 +180,14 @@
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
             </ctrl:CustomListBox>
-            <Button Grid.Row="1"
+            <Button Name="renameBtn"
+                    Grid.Row="1"
                     Margin="0,10,0,0"
                     Width="120"
                     FontWeight="Bold"
                     FontSize="16"
-                    Content="RENAME!"/>
+                    Content="RENAME!"
+                    Click="RenameButton_Click"/>
         </Grid>
     </Grid>
 </Window>

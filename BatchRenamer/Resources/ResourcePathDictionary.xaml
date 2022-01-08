@@ -5,6 +5,7 @@
     <ImageSource x:Key="icon-add">/Resources/icon-add.png</ImageSource>
     <ImageSource x:Key="icon-arrow-up">/Resources/icon-arrow-up.png</ImageSource>
     <ImageSource x:Key="icon-arrow-down">/Resources/icon-arrow-down.png</ImageSource>
+    <ImageSource x:Key="icon-arrow-right">/Resources/icon-arrow-right.png</ImageSource>
     <ImageSource x:Key="icon-floppy">/Resources/icon-floppy.png</ImageSource>
     <ImageSource x:Key="icon-sort">/Resources/icon-sort.png</ImageSource>
     <ImageSource x:Key="icon-trash">/Resources/icon-trash.png</ImageSource>

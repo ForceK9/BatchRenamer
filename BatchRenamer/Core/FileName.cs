@@ -35,8 +35,8 @@ namespace BatchRenamer
         }
         public override bool Equals(Object? obj)
         {
-            if (obj == null) return false;
-            FileName fileName = obj as FileName;
+            FileName? fileName = obj as FileName;
+            if (fileName == null) return false;
             if (!this._savedName.Equals(fileName._savedName))
                 return false;
             return true;

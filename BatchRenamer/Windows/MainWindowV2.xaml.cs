@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using BatchRenamer.Core;
 
 namespace BatchRenamer
 {
@@ -28,6 +30,34 @@ namespace BatchRenamer
             InitializeComponent();
             activeList.ProvideItemSource(boxActive);
             storageList.ProvideItemSource(boxStorage);
+        }
+
+        private void AddBtnActive_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true; // allow selecting multiple files
+            bool? result = ofd.ShowDialog();
+            if (result == true)
+            {
+                foreach (string filename in ofd.FileNames)
+                {
+                    FileName fileName = new FileName(filename);
+                    activeList.Add(fileName);
+                }
+            }
+        }
+
+        private void RenameButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("This will append a counter to all the files selected. Do you wish to proceed?",
+                "Confirm renaming", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                CounterAppendingOperator opt = new CounterAppendingOperator();
+                activeList.ApplyRenamingOperator(opt);
+                activeList.SaveAll();
+                MessageBox.Show("Renaming completed.");
+            }
         }
     }
 }

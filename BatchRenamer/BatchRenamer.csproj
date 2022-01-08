@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Resources\icon-add.png" />
     <None Remove="Resources\icon-arrow-down.png" />
+    <None Remove="Resources\icon-arrow-right.png" />
     <None Remove="Resources\icon-arrow-up.png" />
     <None Remove="Resources\icon-floppy.png" />
     <None Remove="Resources\icon-load.png" />
@@ -27,6 +28,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\icon-arrow-down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\icon-arrow-right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\icon-arrow-up.png">
