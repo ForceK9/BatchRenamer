@@ -112,7 +112,8 @@
                                                 ContentSource="ToolBar"/>
                             </DockPanel>
                             <Border Background="White">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <ScrollViewer VerticalScrollBarVisibility="Visible"
+                                              HorizontalScrollBarVisibility="Disabled">
                                     <ItemsPresenter DockPanel.Dock="Bottom"/>
                                 </ScrollViewer>
                             </Border>

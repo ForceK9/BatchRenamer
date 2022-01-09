@@ -15,6 +15,8 @@
                     Source="/Controls/CustomListBoxTemplate.xaml">
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <ctrl:IndexConverter x:Key="indexConverter"/>
+            <ctrl:CustomDropHandler x:Key="customDropHandler"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="10">
@@ -34,7 +36,9 @@
                                 Header="Files To Rename"
                                 dd:DragDrop.IsDragSource="True"
                                 dd:DragDrop.IsDropTarget="True"
-                                dd:DragDrop.UseDefaultDragAdorner="True">
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames"
+                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource SortBtnTemplate}"
@@ -74,17 +78,29 @@
                 </ctrl:CustomListBox.ToolBar>
                 <ctrl:CustomListBox.ItemTemplate>
                     <DataTemplate>
+                        <!--https://stackoverflow.com/questions/5526217/how-to-get-or-compute-actual-width-of-listbox-without-vertical-scrollbar-if-visi-->
                         <Border BorderBrush="#FFDDDDDD"
                                 BorderThickness="0,0,0,1"
                                 Width="{Binding Path=ViewportWidth,
                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
-                            <!--Put list index here, somehow-->
                             <DockPanel Height="45">
                                 <Border DockPanel.Dock="Left"
                                     Width="40"
                                     BorderBrush="#FFDDDDDD"
                                     BorderThickness="0,0,1,0">
-                                    <!--Put list index here, somehow-->
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="20">
+                                        <TextBlock.Text>
+                                            <Binding Converter="{StaticResource indexConverter}">
+                                                <Binding.RelativeSource>
+                                                    <RelativeSource Mode="FindAncestor"
+                                                                        AncestorType="{x:Type ListBoxItem}"/>
+                                                </Binding.RelativeSource>
+                                            </Binding>
+                                            <!--Binding Path="Index"/-->
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                 </Border>
                                 <TextBlock DockPanel.Dock="Top"
                                        Margin="5,5,5,0">
@@ -112,7 +128,9 @@
                                 Header="Storage"
                                 dd:DragDrop.IsDragSource="True"
                                 dd:DragDrop.IsDropTarget="True"
-                                dd:DragDrop.UseDefaultDragAdorner="True">
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames"
+                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource AddBtnTemplate}"
@@ -137,23 +155,17 @@
                 </ctrl:CustomListBox.ToolBar>
                 <ctrl:CustomListBox.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel Height="50">
-                            <Border DockPanel.Dock="Left"
-                                    Width="30"
-                                    BorderBrush="#FFDDDDDD"
-                                    BorderThickness="0,0,1,0">
-                                <!--Put list index here, somehow-->
-                            </Border>
-                            <TextBlock DockPanel.Dock="Top" Height="20">
+                        <Border BorderBrush="#FFDDDDDD"
+                                BorderThickness="0,0,0,1"
+                                Width="{Binding Path=ViewportWidth,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
+                            <!--Put list index here, somehow-->
+                            <TextBlock DockPanel.Dock="Top"
+                                       Height="20"
+                                       Margin="5,5,5,0">
                                 <Run Text="{Binding Path=Name, Mode=OneWay}"/><Run Text="{Binding Path=Extension, Mode=OneWay}"/>
                             </TextBlock>
-                            <Label>
-                                <StackPanel>
-                                    <Image Source="{StaticResource icon-arrow-up}"/>
-                                    <TextBlock Text="{Binding FullName}"/>
-                                </StackPanel>
-                            </Label>
-                        </DockPanel>
+                        </Border>
                     </DataTemplate>
                 </ctrl:CustomListBox.ItemTemplate>
             </ctrl:CustomListBox>

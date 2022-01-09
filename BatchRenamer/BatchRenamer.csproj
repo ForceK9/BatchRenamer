@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Logic\ActiveFileListManager.cs~RFad85593.TMP" />
     <None Remove="Resources\icon-add.png" />
     <None Remove="Resources\icon-arrow-down.png" />
     <None Remove="Resources\icon-arrow-right.png" />

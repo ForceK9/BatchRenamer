@@ -24,12 +24,14 @@ namespace BatchRenamer
     public partial class MainWindowV2 : Window
     {
         FileNameListManager activeList = new FileNameListManager();
-        FileNameListManager storageList = new FileNameListManager();
+        StorageManager storageList = new StorageManager();
         public MainWindowV2()
         {
             InitializeComponent();
+            boxActive.DataContext = activeList;
+            boxStorage.DataContext = storageList;
             activeList.ProvideItemSource(boxActive);
-            storageList.ProvideItemSource(boxStorage);
+            storageList.ProvideItemSource(boxStorage); 
         }
 
         private void AddBtnActive_Click(object sender, RoutedEventArgs e)

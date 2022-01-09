@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BatchRenamer
 {
-    public class FileName : INotifyPropertyChanged
+    public class FileName : INotifyPropertyChanged, IComparable<FileName>
     {
         private string _savedName;
         public string Path { get; }
@@ -41,6 +38,11 @@ namespace BatchRenamer
                 return false;
             return true;
         }
+        public int CompareTo(FileName? fileName)
+        {
+            if (fileName == null) return -1;
+            return _savedName.CompareTo(fileName._savedName);
+        }
 
         public void Reset()
         {
@@ -60,5 +62,6 @@ namespace BatchRenamer
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Extension"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FullName"));
         }
+
     }
 }
