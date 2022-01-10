@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dd="urn:gong-wpf-dragdrop"
+        xmlns:logic="clr-namespace:BatchRenamer.Logic"
         xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
         Title="BatchRenamer" Height="575" Width="1000" 
@@ -20,6 +21,11 @@
             <ctrl:FileNameBuilderConverter x:Key="fileNameBuilderConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                        CanExecute="AddFilesCommand_CanExecute"
+                        Executed="AddFileCommand_Executed"/>
+    </Window.CommandBindings>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -70,11 +76,12 @@
                         <Button Name="addBtnActive" 
                                 Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
-                                Click="AddBtnActive_Click"/>
+                                Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                                CommandParameter="{Binding}"/>
                         <Button Template="{StaticResource ToStorageBtnTemplate}"
-                                ToolTip="Move to Storage"/>
+                                ToolTip="Move selection(s) to Storage"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
-                                ToolTip="Remove"/>
+                                ToolTip="Remove selection(s)"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
                 <ctrl:CustomListBox.ItemTemplate>
@@ -83,7 +90,11 @@
                         <Border BorderBrush="#FFDDDDDD"
                                 BorderThickness="0,0,0,1"
                                 Width="{Binding Path=ViewportWidth,
-                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
+                                ToolTip="{Binding Path=Current.FullName, Mode=OneWay}"
+                                ToolTipService.BetweenShowDelay="0"
+                                ToolTipService.ShowDuration="5000"
+                                ToolTipService.InitialShowDelay="750">
                             <DockPanel Height="45">
                                 <Border DockPanel.Dock="Left"
                                     Width="40"
@@ -145,13 +156,15 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button-->
-                        <Button Name="addBtnStorage"
+                        <!--Button Name="addBtnStorage"
                                 Template="{StaticResource AddBtnTemplate}"
-                                ToolTip="Add file(s)"/>
+                                ToolTip="Add file(s)"
+                                Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                                CommandParameter="{Binding}"/-->
                         <Button Template="{StaticResource ToListBtnTemplate}"
-                                ToolTip="Move to Files To Rename"/>
+                                ToolTip="Move selection(s) to Files To Rename"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
-                                ToolTip="Remove"/>
+                                ToolTip="Remove selection(s)"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
                 <ctrl:CustomListBox.ItemTemplate>
@@ -159,8 +172,11 @@
                         <Border BorderBrush="#FFDDDDDD"
                                 BorderThickness="0,0,0,1"
                                 Width="{Binding Path=ViewportWidth,
-                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
-                            <!--Put list index here, somehow-->
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
+                                ToolTip="{Binding Path=Current.FullName, Mode=OneWay}"
+                                ToolTipService.BetweenShowDelay="0"
+                                ToolTipService.ShowDuration="5000"
+                                ToolTipService.InitialShowDelay="750">
                             <TextBlock DockPanel.Dock="Top"
                                        Height="20"
                                        Margin="5,5,5,0">

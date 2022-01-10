@@ -47,7 +47,9 @@ namespace BatchRenamer.Core
         public virtual int CompareTo(FileName? fileName)
         {
             if (fileName == null) return -1;
-            return FullName.CompareTo(fileName.FullName);
+            int res = Name.CompareTo(fileName.Name);
+            if (res == 0) return FullName.CompareTo(fileName.FullName);
+            else return res;
         }
 
         //public static implicit operator FileNameBase(string fullName) => new FileNameBase(fullName);

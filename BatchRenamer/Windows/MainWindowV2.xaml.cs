@@ -31,24 +31,31 @@ namespace BatchRenamer
             boxActive.DataContext = activeList;
             boxStorage.DataContext = storageList;
             activeList.ProvideItemSource(boxActive);
-            storageList.ProvideItemSource(boxStorage); 
+            storageList.ProvideItemSource(boxStorage);
         }
 
-        private void AddBtnActive_Click(object sender, RoutedEventArgs e)
+        private void AddFilesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            e.CanExecute = true;
+        }
+
+        private void AddFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            FileNameListManager? targetList = ((ICommandSource)e.OriginalSource).CommandParameter as FileNameListManager;
+            if (targetList == null) return;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true; // allow selecting multiple files
             bool? result = ofd.ShowDialog();
+
             if (result == true)
             {
                 foreach (string filename in ofd.FileNames)
                 {
                     FileName fileName = new FileName(filename);
-                    activeList.Add(fileName);
+                    targetList.Add(fileName);
                 }
             }
         }
-
         private void RenameButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("This will append a counter to all the files selected. Do you wish to proceed?",
