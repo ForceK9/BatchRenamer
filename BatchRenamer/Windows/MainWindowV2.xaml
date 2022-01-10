@@ -17,6 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
             <ctrl:IndexConverter x:Key="indexConverter"/>
             <ctrl:CustomDropHandler x:Key="customDropHandler"/>
+            <ctrl:FileNameBuilderConverter x:Key="fileNameBuilderConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="10">
@@ -104,7 +105,7 @@
                                 </Border>
                                 <TextBlock DockPanel.Dock="Top"
                                        Margin="5,5,5,0">
-                                <Run Text="{Binding Path=Name, Mode=OneWay}"/><Run Text="{Binding Path=Extension, Mode=OneWay}"/>
+                                <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
                                 </TextBlock>
                                 <Label DockPanel.Dock="Bottom">
                                     <StackPanel Orientation="Horizontal"
@@ -112,9 +113,9 @@
                                         <Image Source="{StaticResource icon-arrow-right}"
                                            VerticalAlignment="Center"/>
                                         <TextBlock Margin="5,0,5,0"
-                                               VerticalAlignment="Center"
-                                               Text="{Binding FullName}"
-                                               TextWrapping="WrapWithOverflow"/>
+                                                   VerticalAlignment="Center"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding Preview, Converter={StaticResource fileNameBuilderConverter}}"/>
                                     </StackPanel>
                                 </Label>
                             </DockPanel>
@@ -163,7 +164,7 @@
                             <TextBlock DockPanel.Dock="Top"
                                        Height="20"
                                        Margin="5,5,5,0">
-                                <Run Text="{Binding Path=Name, Mode=OneWay}"/><Run Text="{Binding Path=Extension, Mode=OneWay}"/>
+                                <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
                             </TextBlock>
                         </Border>
                     </DataTemplate>

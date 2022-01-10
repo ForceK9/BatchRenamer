@@ -10,7 +10,8 @@ namespace BatchRenamer.Logic
         public override void ProvideItemSource(ItemsControl itemsControl)
         {
             ICollectionView myDataView = CollectionViewSource.GetDefaultView(_list);
-            myDataView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            myDataView.SortDescriptions.Add(new SortDescription("Current.Name", ListSortDirection.Ascending));
+            myDataView.SortDescriptions.Add(new SortDescription("Current.Extension", ListSortDirection.Ascending));
             itemsControl.ItemsSource = myDataView;
         }
     }

@@ -8,6 +8,6 @@ namespace BatchRenamer.Core
 {
     public interface IFileRenamingOperator
     {
-        public void Rename(ICollection<FileName> fileNames);
+        public void Rename(ICollection<FileNameBuilder> builders);
     }
 }
