@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:vm="clr-namespace:BatchRenamer.ViewModel"
         xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
         Title="BatchRenamer" Height="575" Width="1000" 
@@ -54,8 +55,7 @@
                                 dd:DragDrop.IsDragSource="True"
                                 dd:DragDrop.IsDropTarget="True"
                                 dd:DragDrop.UseDefaultDragAdorner="True"
-                                dd:DragDrop.DragDropContext="filenames"
-                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
+                                dd:DragDrop.DragDropContext="filenames">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource SortBtnTemplate}"
@@ -82,14 +82,16 @@
                             </Button.ContextMenu>
                         </Button-->
                         <Button Template="{StaticResource SortBtnTemplate}"
-                                ToolTip="Sort by Name"/>
+                                ToolTip="Sort by Name"
+                                Command="{Binding SortCommand}"/>
                         <Button Name="addBtnActive" 
                                 Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
                                 Command="{Binding AddFilesCommand}"
-                                CommandParameter="active"/>
+                                CommandParameter="{x:Static vm:BatchRenamerViewModel.ActiveTag}"/>
                         <Button Template="{StaticResource ToStorageBtnTemplate}"
-                                ToolTip="Move selection(s) to Storage"/>
+                                ToolTip="Move selection(s) to Storage"
+                                Command="{Binding MoveListCommand}"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
                                 ToolTip="Remove selection(s)"/>
                     </StackPanel>
@@ -114,12 +116,14 @@
                                                VerticalAlignment="Center"
                                                FontSize="20">
                                         <TextBlock.Text>
-                                            <Binding Converter="{StaticResource indexConverter}">
+                                            <!--Binding Converter="{StaticResource indexConverter}">
                                                 <Binding.RelativeSource>
                                                     <RelativeSource Mode="FindAncestor"
                                                                     AncestorType="{x:Type ListBoxItem}"/>
                                                 </Binding.RelativeSource>
-                                            </Binding>
+                                            </Binding-->
+                                            <Binding Path="Index"
+                                                     Mode="OneWay"/>
                                         </TextBlock.Text>
                                     </TextBlock>
                                 </Border>
@@ -151,8 +155,7 @@
                                 dd:DragDrop.IsDragSource="True"
                                 dd:DragDrop.IsDropTarget="True"
                                 dd:DragDrop.UseDefaultDragAdorner="True"
-                                dd:DragDrop.DragDropContext="filenames"
-                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
+                                dd:DragDrop.DragDropContext="filenames">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource AddBtnTemplate}"
@@ -170,7 +173,7 @@
                                 Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
                                 Command="{Binding AddFilesCommand}"
-                                CommandParameter="storage"/>
+                                CommandParameter="{x:Static vm:BatchRenamerViewModel.StorageTag}"/>
                         <Button Template="{StaticResource ToListBtnTemplate}"
                                 ToolTip="Move selection(s) to Files To Rename"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
