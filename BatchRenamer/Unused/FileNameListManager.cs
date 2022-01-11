@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace BatchRenamer.Logic
+namespace BatchRenamer.ViewModel
 {
     internal class FileNameListManager
     {

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using BatchRenamer.ViewModel;
+using BatchRenamer.Controls;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,43 +12,50 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BatchRenamer.Core;
-using BatchRenamer.Logic;
 using Microsoft.Win32;
+using BatchRenamer.Core;
 
 namespace BatchRenamer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BatchRenamer.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindowV2 : Window
     {
-        FileNameListManager activeFileList = new FileNameListManager();
-        FileNameListManager reserveFileList = new FileNameListManager();
-        public MainWindow()
+        FileNameListManager activeList = new FileNameListManager();
+        StorageManager storageList = new StorageManager();
+        public MainWindowV2()
         {
             InitializeComponent();
-            activeFileList.ProvideItemSource(listBoxOfFiles);
-            //listBoxOfFiles.ItemsSource = _fileManager._list;
+            boxActive.DataContext = activeList;
+            boxStorage.DataContext = storageList;
+            activeList.ProvideItemSource(boxActive);
+            storageList.ProvideItemSource(boxStorage);
         }
 
-        private void AddFileButton_Click(object sender, RoutedEventArgs e)
+        private void AddFilesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            e.CanExecute = true;
+        }
+
+        private void AddFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            FileNameListManager? targetList = ((ICommandSource)e.OriginalSource).CommandParameter as FileNameListManager;
+            if (targetList == null) return;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true; // allow selecting multiple files
             bool? result = ofd.ShowDialog();
+
             if (result == true)
             {
                 foreach (string filename in ofd.FileNames)
                 {
                     FileName fileName = new FileName(filename);
-                    activeFileList.Add(fileName);
+                    targetList.Add(fileName);
                 }
             }
         }
-
         private void RenameButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("This will append a counter to all the files selected. Do you wish to proceed?",
@@ -55,8 +63,8 @@ namespace BatchRenamer
             if (result == MessageBoxResult.Yes)
             {
                 CounterAppendingOperator opt = new CounterAppendingOperator();
-                activeFileList.ApplyRenamingOperator(opt);
-                activeFileList.SaveAll();
+                activeList.ApplyRenamingOperator(opt);
+                activeList.SaveAll();
                 MessageBox.Show("Renaming completed.");
             }
         }

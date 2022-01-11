@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace BatchRenamer.Logic
+namespace BatchRenamer.ViewModel
 {
     internal static class FileNameListCommands
     {

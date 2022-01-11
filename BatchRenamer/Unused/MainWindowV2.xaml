@@ -1,0 +1,222 @@
+﻿<Window x:Class="BatchRenamer.MainWindowV2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dd="urn:gong-wpf-dragdrop"
+        xmlns:logic="clr-namespace:BatchRenamer.ViewModel"
+        xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
+        mc:Ignorable="d"
+        Title="BatchRenamer" Height="575" Width="1000" 
+        Background="WhiteSmoke">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary 
+                    Source="/Controls/CustomListBoxTemplate.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <ctrl:IndexConverter x:Key="indexConverter"/>
+            <ctrl:CustomDropHandler x:Key="customDropHandler"/>
+            <ctrl:FileNameBuilderConverter x:Key="fileNameBuilderConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                        CanExecute="AddFilesCommand_CanExecute"
+                        Executed="AddFileCommand_Executed"/>
+    </Window.CommandBindings>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ctrl:CustomListBox x:Name="boxActive" 
+                                Grid.Row="0"
+                                Margin="0,0,0,10"
+                                Header="Files To Rename"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames"
+                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
+                <ctrl:CustomListBox.ToolBar>
+                    <StackPanel>
+                        <!--Button Template="{StaticResource SortBtnTemplate}"
+                                ToolTip="Sort by"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Sort by Name"/>
+                                    <MenuItem Header="Sort by Date modified"/>
+                                    <MenuItem Header="Sort by Size"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add file(s)..."/>
+                                    <MenuItem Header="Add files recursively..."/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button-->
+                        <Button Template="{StaticResource SortBtnTemplate}"
+                                ToolTip="Sort by Name"/>
+                        <Button Name="addBtnActive" 
+                                Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                                CommandParameter="{Binding}"/>
+                        <Button Template="{StaticResource ToStorageBtnTemplate}"
+                                ToolTip="Move selection(s) to Storage"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Remove selection(s)"/>
+                    </StackPanel>
+                </ctrl:CustomListBox.ToolBar>
+                <ctrl:CustomListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--https://stackoverflow.com/questions/5526217/how-to-get-or-compute-actual-width-of-listbox-without-vertical-scrollbar-if-visi-->
+                        <Border BorderBrush="#FFDDDDDD"
+                                BorderThickness="0,0,0,1"
+                                Width="{Binding Path=ViewportWidth,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
+                                ToolTip="{Binding Path=Current.FullName, Mode=OneWay}"
+                                ToolTipService.BetweenShowDelay="0"
+                                ToolTipService.ShowDuration="5000"
+                                ToolTipService.InitialShowDelay="750">
+                            <DockPanel Height="45">
+                                <Border DockPanel.Dock="Left"
+                                    Width="40"
+                                    BorderBrush="#FFDDDDDD"
+                                    BorderThickness="0,0,1,0">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="20">
+                                        <TextBlock.Text>
+                                            <Binding Converter="{StaticResource indexConverter}">
+                                                <Binding.RelativeSource>
+                                                    <RelativeSource Mode="FindAncestor"
+                                                                        AncestorType="{x:Type ListBoxItem}"/>
+                                                </Binding.RelativeSource>
+                                            </Binding>
+                                            <!--Binding Path="Index"/-->
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Border>
+                                <TextBlock DockPanel.Dock="Top"
+                                       Margin="5,5,5,0">
+                                <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
+                                </TextBlock>
+                                <Label DockPanel.Dock="Bottom">
+                                    <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Left">
+                                        <Image Source="{StaticResource icon-arrow-right}"
+                                           VerticalAlignment="Center"/>
+                                        <TextBlock Margin="5,0,5,0"
+                                                   VerticalAlignment="Center"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding Preview, Converter={StaticResource fileNameBuilderConverter}}"/>
+                                    </StackPanel>
+                                </Label>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ctrl:CustomListBox.ItemTemplate>
+            </ctrl:CustomListBox>
+            <ctrl:CustomListBox x:Name="boxStorage" 
+                                Grid.Row="1"
+                                Margin="0,10,0,0"
+                                Header="Storage"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames"
+                                dd:DragDrop.DropHandler="{StaticResource customDropHandler}">
+                <ctrl:CustomListBox.ToolBar>
+                    <StackPanel>
+                        <!--Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                ContextMenuService.Placement="Bottom"
+                                local:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add file(s)..."/>
+                                    <MenuItem Header="Add files recursively..."/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button-->
+                        <!--Button Name="addBtnStorage"
+                                Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add file(s)"
+                                Command="{x:Static logic:FileNameListCommands.AddFilesCommand}"
+                                CommandParameter="{Binding}"/-->
+                        <Button Template="{StaticResource ToListBtnTemplate}"
+                                ToolTip="Move selection(s) to Files To Rename"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Remove selection(s)"/>
+                    </StackPanel>
+                </ctrl:CustomListBox.ToolBar>
+                <ctrl:CustomListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FFDDDDDD"
+                                BorderThickness="0,0,0,1"
+                                Width="{Binding Path=ViewportWidth,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
+                                ToolTip="{Binding Path=Current.FullName, Mode=OneWay}"
+                                ToolTipService.BetweenShowDelay="0"
+                                ToolTipService.ShowDuration="5000"
+                                ToolTipService.InitialShowDelay="750">
+                            <TextBlock DockPanel.Dock="Top"
+                                       Height="20"
+                                       Margin="5,5,5,0">
+                                <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ctrl:CustomListBox.ItemTemplate>
+            </ctrl:CustomListBox>
+        </Grid>
+        <Grid Grid.Column="1"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ctrl:CustomListBox x:Name="boxRecipe"  Grid.Row="0"
+                                 Margin="0,0,0,10"
+                                 Header="Renaming Recipe">
+                <ctrl:CustomListBox.ToolBar>
+                    <StackPanel>
+                        <Button Template="{StaticResource AddBtnTemplate}"
+                                ToolTip="Add Operation(s)"/>
+                        <Button Template="{StaticResource SaveBtnTemplate}"
+                                ToolTip="Save Recipe"/>
+                        <Button Template="{StaticResource LoadBtnTemplate}"
+                                ToolTip="Load Recipe"/>
+                        <Button Template="{StaticResource TrashBtnTemplate}"
+                                ToolTip="Clear Recipe"/>
+                    </StackPanel>
+                </ctrl:CustomListBox.ToolBar>
+            </ctrl:CustomListBox>
+            <Button Name="renameBtn"
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Width="120"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    Content="RENAME!"
+                    Click="RenameButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Logic\ActiveFileListManager.cs~RFad85593.TMP" />
+    <None Remove="ViewModel\ActiveFileListManager.cs~RFad85593.TMP" />
     <None Remove="Resources\icon-add.png" />
     <None Remove="Resources\icon-arrow-down.png" />
     <None Remove="Resources\icon-arrow-right.png" />
@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="3.0.0" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
@@ -49,6 +50,19 @@
     <Resource Include="Resources\icon-trash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Windows\MainWindowV3.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Windows\MainWindowV3.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

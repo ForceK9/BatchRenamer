@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace BatchRenamer.Logic
+namespace BatchRenamer.ViewModel
 {
     // The Storage is an alphabetically-sorted list
     internal sealed class StorageManager : FileNameListManager
