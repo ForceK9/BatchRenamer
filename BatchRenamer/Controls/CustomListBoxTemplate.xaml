@@ -60,18 +60,22 @@
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
+            <Style TargetType="ListBox">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="SelectionMode" Value="Extended"/>
+                <Setter Property="ItemContainerStyle">
+                    <!--https://stackoverflow.com/questions/4704009/gaps-between-items-in-my-listbox-->
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Margin" Value="-1"/>
+                            <Setter Property="Padding" Value="-1"/>
+                            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Style.Resources>
-        <Setter Property="SelectionMode" Value="Extended"/>
-        <Setter Property="ItemContainerStyle">
-            <!--https://stackoverflow.com/questions/4704009/gaps-between-items-in-my-listbox-->
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="-1"/>
-                    <Setter Property="Padding" Value="-1"/>
-                    <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-                </Style>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ctrl:CustomListBox">
@@ -93,10 +97,8 @@
                                                 ContentSource="ToolBar"/>
                             </DockPanel>
                             <Border Background="White">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible"
-                                              HorizontalScrollBarVisibility="Disabled">
-                                    <ItemsPresenter DockPanel.Dock="Bottom"/>
-                                </ScrollViewer>
+                                <ContentPresenter DockPanel.Dock="Bottom"
+                                                  ContentSource="ListBox"/>
                             </Border>
                         </DockPanel>
                     </Border>

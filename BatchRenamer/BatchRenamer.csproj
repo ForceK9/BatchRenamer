@@ -8,6 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ContextMenuLeftClickBehavior.cs" />
+    <Compile Remove="CustomDropHandler.cs" />
+    <Compile Remove="FileNameListCommands.cs" />
+    <Compile Remove="FileNameListManager.cs" />
+    <Compile Remove="IndexConverter.cs" />
+    <Compile Remove="MainWindow.xaml.cs" />
+    <Compile Remove="MainWindowV2.xaml.cs" />
+    <Compile Remove="StorageManager.cs" />
+    <Compile Remove="Unused\MainWindow.xaml.cs" />
+    <Compile Remove="Unused\MainWindowV2.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ViewModel\ActiveFileListManager.cs~RFad85593.TMP" />
     <None Remove="Resources\icon-add.png" />
     <None Remove="Resources\icon-arrow-down.png" />
@@ -20,9 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Unused\MainWindow.xaml" />
+    <Page Remove="Unused\MainWindowV2.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="3.0.0" />
-    <PackageReference Include="Prism.Core" Version="8.1.97" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>

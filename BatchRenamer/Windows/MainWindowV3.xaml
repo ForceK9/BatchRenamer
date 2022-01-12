@@ -17,8 +17,6 @@
                     Source="/Controls/CustomListBoxTemplate.xaml">
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <ctrl:IndexConverter x:Key="indexConverter"/>
-            <ctrl:CustomDropHandler x:Key="customDropHandler"/>
             <ctrl:FileNameBuilderConverter x:Key="fileNameBuilderConverter"/>
             <CollectionViewSource x:Key="storageCollectionView" 
                                   Source="{Binding StorageList}">
@@ -50,12 +48,7 @@
             <ctrl:CustomListBox x:Name="boxActive" 
                                 Grid.Row="0"
                                 Margin="0,0,0,10"
-                                Header="Files To Rename"
-                                ItemsSource="{Binding ActiveList}"
-                                dd:DragDrop.IsDragSource="True"
-                                dd:DragDrop.IsDropTarget="True"
-                                dd:DragDrop.UseDefaultDragAdorner="True"
-                                dd:DragDrop.DragDropContext="filenames">
+                                Header="Files To Rename">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource SortBtnTemplate}"
@@ -83,11 +76,11 @@
                         </Button-->
                         <Button Template="{StaticResource SortBtnTemplate}"
                                 ToolTip="Sort by Name"
-                                Command="{Binding SortCommand}"/>
+                                Command="{x:Static vm:BatchRenamerViewModel.SortCommand}"/>
                         <Button Name="addBtnActive" 
                                 Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
-                                Command="{Binding AddFilesCommand}"
+                                Command="{x:Static vm:BatchRenamerViewModel.AddFilesCommand}"
                                 CommandParameter="{x:Static vm:BatchRenamerViewModel.ActiveTag}"/>
                         <Button Template="{StaticResource ToStorageBtnTemplate}"
                                 ToolTip="Move selection(s) to Storage"
@@ -97,10 +90,16 @@
                                 ToolTip="Remove selection(s)"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
-                <ctrl:CustomListBox.ItemTemplate>
-                    <DataTemplate>
-                        <!--https://stackoverflow.com/questions/5526217/how-to-get-or-compute-actual-width-of-listbox-without-vertical-scrollbar-if-visi-->
-                        <Border BorderBrush="#FFDDDDDD"
+                <ctrl:CustomListBox.ListBox>
+                    <ListBox ItemsSource="{Binding ActiveList}"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <!--https://stackoverflow.com/questions/5526217/how-to-get-or-compute-actual-width-of-listbox-without-vertical-scrollbar-if-visi-->
+                                <Border BorderBrush="#FFDDDDDD"
                                 BorderThickness="0,0,0,1"
                                 Width="{Binding Path=ViewportWidth,
                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
@@ -108,55 +107,52 @@
                                 ToolTipService.BetweenShowDelay="0"
                                 ToolTipService.ShowDuration="5000"
                                 ToolTipService.InitialShowDelay="750">
-                            <DockPanel Height="45">
-                                <Border DockPanel.Dock="Left"
+                                    <DockPanel Height="45">
+                                        <Border DockPanel.Dock="Left"
                                     Width="40"
                                     BorderBrush="#FFDDDDDD"
                                     BorderThickness="0,0,1,0">
-                                    <TextBlock HorizontalAlignment="Center"
+                                            <TextBlock HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                FontSize="20">
-                                        <TextBlock.Text>
-                                            <!--Binding Converter="{StaticResource indexConverter}">
+                                                <TextBlock.Text>
+                                                    <!--Binding Converter="{StaticResource indexConverter}">
                                                 <Binding.RelativeSource>
                                                     <RelativeSource Mode="FindAncestor"
                                                                     AncestorType="{x:Type ListBoxItem}"/>
                                                 </Binding.RelativeSource>
                                             </Binding-->
-                                            <Binding Path="Index"
+                                                    <Binding Path="Index"
                                                      Mode="OneWay"/>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Border>
-                                <TextBlock DockPanel.Dock="Top"
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Border>
+                                        <TextBlock DockPanel.Dock="Top"
                                        Margin="5,5,5,0">
                                 <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
-                                </TextBlock>
-                                <Label DockPanel.Dock="Bottom">
-                                    <StackPanel Orientation="Horizontal"
+                                        </TextBlock>
+                                        <Label DockPanel.Dock="Bottom">
+                                            <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Left">
-                                        <Image Source="{StaticResource icon-arrow-right}"
+                                                <Image Source="{StaticResource icon-arrow-right}"
                                            VerticalAlignment="Center"/>
-                                        <TextBlock Margin="5,0,5,0"
+                                                <TextBlock Margin="5,0,5,0"
                                                    VerticalAlignment="Center"
                                                    TextWrapping="WrapWithOverflow"
                                                    Text="{Binding Preview, Converter={StaticResource fileNameBuilderConverter}}"/>
-                                    </StackPanel>
-                                </Label>
-                            </DockPanel>
-                        </Border>
-                    </DataTemplate>
-                </ctrl:CustomListBox.ItemTemplate>
+                                            </StackPanel>
+                                        </Label>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ctrl:CustomListBox.ListBox>
+                
             </ctrl:CustomListBox>
-            <ctrl:CustomListBox x:Name="boxStorage" 
-                                Grid.Row="1"
+            <ctrl:CustomListBox Grid.Row="1"
                                 Margin="0,10,0,0"
-                                Header="Storage"
-                                ItemsSource="{Binding Source={StaticResource storageCollectionView}}"
-                                dd:DragDrop.IsDragSource="True"
-                                dd:DragDrop.IsDropTarget="True"
-                                dd:DragDrop.UseDefaultDragAdorner="True"
-                                dd:DragDrop.DragDropContext="filenames">
+                                Header="Storage">
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
                         <!--Button Template="{StaticResource AddBtnTemplate}"
@@ -173,7 +169,7 @@
                         <Button Name="addBtnStorage"
                                 Template="{StaticResource AddBtnTemplate}"
                                 ToolTip="Add file(s)"
-                                Command="{Binding AddFilesCommand}"
+                                Command="{x:Static vm:BatchRenamerViewModel.AddFilesCommand}"
                                 CommandParameter="{x:Static vm:BatchRenamerViewModel.StorageTag}"/>
                         <Button Template="{StaticResource ToListBtnTemplate}"
                                 ToolTip="Move selection(s) to Files To Rename"
@@ -183,9 +179,16 @@
                                 ToolTip="Remove selection(s)"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
-                <ctrl:CustomListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="#FFDDDDDD"
+                <ctrl:CustomListBox.ListBox>
+                    <ListBox x:Name="boxStorage"
+                             ItemsSource="{Binding Source={StaticResource storageCollectionView}}"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.DragDropContext="filenames">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#FFDDDDDD"
                                 BorderThickness="0,0,0,1"
                                 Width="{Binding Path=ViewportWidth,
                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"
@@ -193,14 +196,17 @@
                                 ToolTipService.BetweenShowDelay="0"
                                 ToolTipService.ShowDuration="5000"
                                 ToolTipService.InitialShowDelay="750">
-                            <TextBlock DockPanel.Dock="Top"
+                                    <TextBlock DockPanel.Dock="Top"
                                        Height="20"
                                        Margin="5,5,5,0">
                                 <Run Text="{Binding Path=Current.Name, Mode=OneWay}"/><Run Text="{Binding Path=Current.Extension, Mode=OneWay}"/>
-                            </TextBlock>
-                        </Border>
-                    </DataTemplate>
-                </ctrl:CustomListBox.ItemTemplate>
+                                    </TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ctrl:CustomListBox.ListBox>
+                
             </ctrl:CustomListBox>
         </Grid>
         <Grid Grid.Column="1"

@@ -1,15 +1,11 @@
-﻿using BatchRenamer.Controls;
-using BatchRenamer.Core;
+﻿using BatchRenamer.Core;
 using Microsoft.Win32;
-using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace BatchRenamer.ViewModel
@@ -21,28 +17,31 @@ namespace BatchRenamer.ViewModel
         public ObservableCollection<FileListItem> StorageList { get; private set; }
         public const string ActiveTag = "active";
         public const string StorageTag = "storage";
-        public ICommand AddFilesCommand { get; private set; }
-        public ICommand SortCommand { get; private set; }
         // MoveList is a RoutedCommand because its CanExecuteChanged event is need for the Button's style changne
+        public static readonly RoutedCommand AddFilesCommand = new RoutedCommand();
+        public static readonly RoutedCommand SortCommand = new RoutedCommand();
         public static readonly RoutedCommand MoveListCommand = new RoutedCommand();
-        public ICommand RemoveFileCommand { get; private set; }
+        public static readonly RoutedCommand RemoveFilesCommand = new RoutedCommand();
         public BatchRenamerViewModel(Window window)
         {
             // BindingList is for Winforms and is incompatible with CollectionView
             _list = new ObservableCollection<FileListItem>();
             ActiveList = new ObservableCollection<FileListItem>();
             StorageList = new ObservableCollection<FileListItem>();
-            AddFilesCommand = new DelegateCommand<object>(AddFileCommand_Executed,
-                AddFilesCommand_CanExecute);
-            SortCommand = new DelegateCommand<object>(SortCommand_Executed,
-                SortCommand_CanExecute);
             
+            // A delegate to refresh ActiveList's item indexes when it changes
             ActiveList.CollectionChanged += OnActiveListChanged;
 
             // Add command bindings
             window.CommandBindings.Add(new CommandBinding(
+                AddFilesCommand, AddFileCommand_Executed,
+                AddFilesCommand_CanExecute));
+            window.CommandBindings.Add(new CommandBinding(
                 MoveListCommand, MoveListCommand_Executed,
                 MoveListCommand_CanExecute));
+            window.CommandBindings.Add(new CommandBinding(
+                SortCommand, SortCommand_Executed,
+                SortCommand_CanExecute));
         }
 
         /*public bool isFull()
@@ -88,6 +87,7 @@ namespace BatchRenamer.ViewModel
             {
                 // the underlying list already has this item
                 FileListItem item = _list[_list.IndexOf(newItem)];
+                item.IsSelected = true;
                 if (!listToAdd.Contains(item))
                 {
                     // the item is in the other list, so we need to switch
@@ -96,6 +96,13 @@ namespace BatchRenamer.ViewModel
                 }
             }
         }
+
+        public virtual void UnselectAll()
+        {
+            foreach (FileListItem item in _list)
+                item.IsSelected = false;
+        }
+
         public virtual void ApplyRenamingOperator(IFileRenamingOperator opt)
         {
             List<FileNameBuilder> builderList = new List<FileNameBuilder>();
@@ -119,12 +126,13 @@ namespace BatchRenamer.ViewModel
             }
         }
 
+
         // ----------------------Button commands-----------------------
-        private void AddFilesCommand_CanExecuteR(object sender, CanExecuteRoutedEventArgs e)
+        private void AddFilesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
-        private void AddFileCommand_ExecutedR(object sender, ExecutedRoutedEventArgs e)
+        private void AddFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string parameter = (string)e.Parameter;
             OpenFileDialog ofd = new OpenFileDialog();
@@ -133,13 +141,18 @@ namespace BatchRenamer.ViewModel
 
             if (result == true)
             {
+                UnselectAll();
                 foreach (string filename in ofd.FileNames)
                 {
                     FileName fileName = new FileName(filename);
                     AddFile(fileName, parameter);
                 }
             }
+
+            e.Handled = true;
         }
+
+        /*
         private bool AddFilesCommand_CanExecute(object arg)
         {
             return true;
@@ -161,13 +174,14 @@ namespace BatchRenamer.ViewModel
                 }
             }
         }
+        */
 
-        private bool SortCommand_CanExecute(object arg)
+        private void SortCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            return true;
+            e.CanExecute = ActiveList.Count > 0 && !ActiveList.SequenceEqual(ActiveList.OrderBy(i => i.Current));
         }
 
-        private void SortCommand_Executed(object arg)
+        private void SortCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // TODO: maybe perform some sort of animation here
             // https://stackoverflow.com/questions/3973137/order-a-observablecollectiont-without-creating-a-new-one?noredirect=1&lq=1
@@ -177,6 +191,7 @@ namespace BatchRenamer.ViewModel
             {
                 ActiveList.Add(item);
             }
+            e.Handled = true;
         }
 
         private void MoveListCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
