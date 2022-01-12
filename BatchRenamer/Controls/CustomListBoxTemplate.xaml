@@ -49,6 +49,11 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.2"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
             <Style TargetType="Image">
                 <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
@@ -63,6 +68,7 @@
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Margin" Value="-1"/>
                     <Setter Property="Padding" Value="-1"/>
+                    <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                 </Style>
             </Setter.Value>
         </Setter>

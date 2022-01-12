@@ -3,6 +3,9 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using BatchRenamer.Core;
+using System.Windows.Controls;
+using System.Diagnostics;
+using System.Windows.Media;
 
 namespace BatchRenamer
 {
@@ -15,7 +18,7 @@ namespace BatchRenamer
         public MainWindowV3()
         {
             InitializeComponent();
-            viewModel = new BatchRenamerViewModel();
+            viewModel = new BatchRenamerViewModel(this);
             DataContext = viewModel;
         }
         private void RenameButton_Click(object sender, RoutedEventArgs e)
