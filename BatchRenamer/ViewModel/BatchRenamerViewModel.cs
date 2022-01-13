@@ -17,7 +17,7 @@ namespace BatchRenamer.ViewModel
         public ObservableCollection<FileListItem> StorageList { get; private set; }
         public const string ActiveTag = "active";
         public const string StorageTag = "storage";
-        // MoveList is a RoutedCommand because its CanExecuteChanged event is need for the Button's style changne
+        // We use RoutedCommand because its CanExecuteChanged event is needed for various Button's effects
         public static readonly RoutedCommand AddFilesCommand = new RoutedCommand();
         public static readonly RoutedCommand SortCommand = new RoutedCommand();
         public static readonly RoutedCommand MoveListCommand = new RoutedCommand();
@@ -42,6 +42,9 @@ namespace BatchRenamer.ViewModel
             window.CommandBindings.Add(new CommandBinding(
                 SortCommand, SortCommand_Executed,
                 SortCommand_CanExecute));
+            window.CommandBindings.Add(new CommandBinding(
+                RemoveFilesCommand, RemoveFilesCommand_Executed,
+                RemoveFilesCommand_CanExecute));
         }
 
         /*public bool isFull()
@@ -235,6 +238,44 @@ namespace BatchRenamer.ViewModel
                 listToRemove.Remove(item);
                 listToAdd.Add(item);
                 item.IsSelected = false;
+            }
+            e.Handled = true;
+        }
+
+        private void RemoveFilesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            string tag = (string)e.Parameter;
+
+            ObservableCollection<FileListItem>? list = GetListByTag(tag);
+            if (list == null) return;
+
+            foreach (FileListItem item in list)
+            {
+                if (item.IsSelected)
+                {
+                    e.CanExecute = true;
+                    return;
+                }
+            }
+            e.CanExecute = false;
+        }
+
+        private void RemoveFilesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            string tag = (string)e.Parameter;
+
+            ObservableCollection<FileListItem>? listToRemove = GetListByTag(tag);
+            if (listToRemove == null) return;
+
+            List<FileListItem> selected = new List<FileListItem>();
+            foreach (FileListItem item in listToRemove)
+            {
+                if (item.IsSelected) selected.Add(item);
+            }
+
+            foreach (FileListItem item in selected)
+            {
+                listToRemove.Remove(item);
             }
             e.Handled = true;
         }
