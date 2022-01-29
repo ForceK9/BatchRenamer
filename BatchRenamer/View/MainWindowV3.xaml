@@ -53,7 +53,7 @@
                     <StackPanel>
                         <TextBlock Text="Files To Rename"/>
                         <Image Style="{StaticResource InfoIconTemplate}"
-                               ToolTip="Placeholder text"/>
+                               ToolTip="Placeholder text" Visibility="Hidden"/>
                     </StackPanel>
                 </ctrl:CustomListBox.Header>
                 <ctrl:CustomListBox.ToolBar>
@@ -162,7 +162,7 @@
                     <StackPanel>
                         <TextBlock Text="Storage"/>
                         <Image Style="{StaticResource InfoIconTemplate}"
-                               ToolTip="Placeholder text"/>
+                               ToolTip="Placeholder text" Visibility="Hidden"/>
                     </StackPanel>
                 </ctrl:CustomListBox.Header>
                 <ctrl:CustomListBox.ToolBar>
@@ -231,7 +231,7 @@
                     <StackPanel>
                         <TextBlock Text="Recipe"/>
                         <Image Style="{StaticResource InfoIconTemplate}"
-                               ToolTip="Placeholder text"/>
+                               ToolTip="Placeholder text" Visibility="Hidden"/>
                     </StackPanel>
                 </ctrl:CustomListBox.Header>
                 <ctrl:CustomListBox.ToolBar>
