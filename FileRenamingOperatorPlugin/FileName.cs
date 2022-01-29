@@ -67,10 +67,12 @@ namespace BatchRenamingCore
         public virtual bool Assign(string fullName)
         {
             if (!File.Exists(FullName)) return false;
+            string backup = FullName;
             try
             {
-                File.Move(FullName, fullName);
+                //assign before move to avoid race condition with FileSystemWatcher catching Renamed event
                 SilentAssign(fullName);
+                File.Move(backup, fullName);
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Extension"));
@@ -79,6 +81,7 @@ namespace BatchRenamingCore
             }
             catch (Exception ex)
             {
+                SilentAssign(backup);
                 return false;
             }
         }
