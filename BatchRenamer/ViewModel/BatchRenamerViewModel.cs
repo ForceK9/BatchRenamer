@@ -109,6 +109,7 @@ namespace BatchRenamer.ViewModel
 
         private void RefreshPreview()
         {
+            Trace.WriteLine("refresh begin");
             List<FileNameBuilder> previews = new List<FileNameBuilder>();
             // reset preview
             foreach (FileListItem item in ActiveList)
@@ -124,6 +125,7 @@ namespace BatchRenamer.ViewModel
             // manually fire PropertyChanged event
             foreach (FileListItem item in ActiveList)
                 item.PreviewChanged();
+            Trace.WriteLine("refresh end");
         }
 
         public virtual void AddFile(FileName fileName, string parameter)
@@ -242,7 +244,7 @@ namespace BatchRenamer.ViewModel
             {
                 item.Save();
             }
-            RefreshPreview();
+            //RefreshPreview();
         }
 
 
