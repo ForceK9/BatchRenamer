@@ -10,7 +10,7 @@
         xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
         Title="BatchRenamer" Height="575" Width="1000" 
-        Background="WhiteSmoke">
+        Background="WhiteSmoke" Icon="/Resources/icon-BatchRenamer.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

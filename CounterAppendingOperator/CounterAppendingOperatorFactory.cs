@@ -1,7 +1,6 @@
 ﻿using BatchRenamingCore;
 using System;
 using System.Windows;
-using Xceed.Wpf.Toolkit;
 
 namespace CounterAppendingOperatorPlugin
 {
