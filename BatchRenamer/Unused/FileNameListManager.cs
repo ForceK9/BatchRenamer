@@ -1,4 +1,4 @@
-﻿using BatchRenamer.Core;
+﻿using BatchRenamingCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,7 +58,7 @@ namespace BatchRenamer.ViewModel
         {
             _list.RemoveAt(index);
         }
-        public virtual void ApplyRenamingOperator(IFileRenamingOperator opt)
+        public virtual void ApplyRenamingOperator(FileRenamingOperator opt)
         {
             List<FileNameBuilder> builderList = new List<FileNameBuilder>();
             foreach (FileListItem item in _list)

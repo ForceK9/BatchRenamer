@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BatchRenamer.Core
+namespace BatchRenamingCore
 {
     public class FileNameBuilder
     {
         protected string _savedName;
         public string Path { get; }
-        public StringBuilder NameBuilder { get; }
-        public StringBuilder ExtensionBuilder { get; }
-        public String Name { get { return NameBuilder.ToString(); } }
-        public String Extension { get { return ExtensionBuilder.ToString(); } }
+        public String Name { get; set; }
+        public String Extension { get; set; }
         public override string ToString()
         {
             return $"{Path}{Name}{Extension}";
@@ -22,24 +20,19 @@ namespace BatchRenamer.Core
         public FileNameBuilder(string fullName)
         {
             _savedName = fullName;
-            NameBuilder = new StringBuilder();
-            ExtensionBuilder = new StringBuilder();
 
             FileName fileName = new FileName(_savedName);
 
-            ExtensionBuilder.Append(fileName.Extension);
-            NameBuilder.Append(fileName.Name);
+            Extension = fileName.Extension;
+            Name = fileName.Name;
             Path = fileName.Path;
         }
-        public void Clear()
+        public void Reset()
         {
-            NameBuilder.Clear();
-            ExtensionBuilder.Clear();
-
             FileName fileName = new FileName(_savedName);
 
-            ExtensionBuilder.Append(fileName.Extension);
-            NameBuilder.Append(fileName.Name);   
+            Extension = fileName.Extension;
+            Name = fileName.Name;   
         }
         public void Save()
         {

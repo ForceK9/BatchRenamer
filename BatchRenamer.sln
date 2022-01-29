@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchRenamer", "BatchRenamer\BatchRenamer.csproj", "{0EFA7153-0252-4639-AE0E-96F893300DDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BatchRenamer", "BatchRenamer\BatchRenamer.csproj", "{0EFA7153-0252-4639-AE0E-96F893300DDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchRenamingCore", "FileRenamingOperatorPlugin\BatchRenamingCore.csproj", "{FBC69C1E-3C2C-4209-97F5-42EB522A24D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CounterAppendingOperatorPlugin", "CounterAppendingOperator\CounterAppendingOperatorPlugin.csproj", "{1A9AF2A6-F514-4A00-A5B3-B1BA35471A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileRenamingOperators", "FileRenamingOperators\FileRenamingOperators.csproj", "{0A22FFB3-18E9-4EFD-9B9D-04170151DC96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{0EFA7153-0252-4639-AE0E-96F893300DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EFA7153-0252-4639-AE0E-96F893300DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EFA7153-0252-4639-AE0E-96F893300DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC69C1E-3C2C-4209-97F5-42EB522A24D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC69C1E-3C2C-4209-97F5-42EB522A24D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC69C1E-3C2C-4209-97F5-42EB522A24D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC69C1E-3C2C-4209-97F5-42EB522A24D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A9AF2A6-F514-4A00-A5B3-B1BA35471A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A9AF2A6-F514-4A00-A5B3-B1BA35471A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A9AF2A6-F514-4A00-A5B3-B1BA35471A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A9AF2A6-F514-4A00-A5B3-B1BA35471A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A22FFB3-18E9-4EFD-9B9D-04170151DC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A22FFB3-18E9-4EFD-9B9D-04170151DC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A22FFB3-18E9-4EFD-9B9D-04170151DC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A22FFB3-18E9-4EFD-9B9D-04170151DC96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

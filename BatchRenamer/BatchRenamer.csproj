@@ -73,16 +73,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Windows\MainWindowV3.xaml.cs">
+    <Compile Update="View\MainWindowV3.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Windows\MainWindowV3.xaml">
+    <Page Update="View\MainWindowV3.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CounterAppendingOperator\CounterAppendingOperatorPlugin.csproj" />
+    <ProjectReference Include="..\FileRenamingOperatorPlugin\BatchRenamingCore.csproj" />
+    <ProjectReference Include="..\FileRenamingOperators\FileRenamingOperators.csproj" />
   </ItemGroup>
 
 </Project>

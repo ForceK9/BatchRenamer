@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="renameOperatorTemplate">
+        <Border BorderBrush="#FFDDDDDD"
+                BorderThickness="0,0,0,1">
+            <HeaderedContentControl>
+                <HeaderedContentControl.ToolTip>
+                    <TextBlock>
+                    Contenate a string to the beginning or the end of each file name.
+                    <LineBreak/>
+                    Maximum 40 characters.
+                    </TextBlock>
+                </HeaderedContentControl.ToolTip>
+                <HeaderedContentControl.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="MinWidth" Value="100"/>
+                        <Setter Property="MaxWidth" Value="300"/>
+                        <Setter Property="Height" Value="20"/>
+                        <Setter Property="MaxLength" Value="40"/>
+                        <Setter Property="MinLines" Value="1"/>
+                        <Setter Property="TextAlignment" Value="Left"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style >
+                </HeaderedContentControl.Resources>
+                <HeaderedContentControl.Header>
+                    <TextBlock Text="Add prefix or suffix"
+                           VerticalAlignment="Center" Margin="20,5,5,5"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           Height="20"/>
+                </HeaderedContentControl.Header>
+                <UniformGrid Rows="2" Height="60"  HorizontalAlignment="Stretch">
+                    <Label HorizontalContentAlignment="Center" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                            <TextBlock Text="Phrase : "
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Mode=TwoWay, Path=Phrase, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Label>
+                    <UniformGrid Columns="4">
+                        <RadioButton IsChecked="{Binding Mode=TwoWay, Path=IsPrefix}"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"/>
+                        <TextBlock Text="Prefix" HorizontalAlignment="Left"
+                               VerticalAlignment="Center"/>
+                        <RadioButton HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"/>
+                        <TextBlock Text="Suffix" HorizontalAlignment="Left"
+                               VerticalAlignment="Center"/>
+                    </UniformGrid>
+                </UniformGrid>
+            </HeaderedContentControl>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>

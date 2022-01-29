@@ -1,4 +1,4 @@
-﻿using BatchRenamer.Core;
+﻿using BatchRenamingCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

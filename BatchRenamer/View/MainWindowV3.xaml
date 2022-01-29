@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:v="clr-namespace:BatchRenamer"
         xmlns:vm="clr-namespace:BatchRenamer.ViewModel"
         xmlns:ctrl="clr-namespace:BatchRenamer.Controls"
         mc:Ignorable="d"
@@ -27,6 +28,7 @@
                                          Direction="Ascending"/>
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
+            <v:RenamingOperatorTemplateSelector x:Key="recipeTemplateSelector"/>
         </ResourceDictionary>
     </Window.Resources>
     <Window.CommandBindings>
@@ -223,8 +225,8 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ctrl:CustomListBox x:Name="boxRecipe"  Grid.Row="0"
-                                 Margin="0,0,0,10">
+            <ctrl:CustomListBox Grid.Row="0"
+                                Margin="0,0,0,10">
                 <ctrl:CustomListBox.Header>
                     <StackPanel>
                         <TextBlock Text="Recipe"/>
@@ -234,16 +236,33 @@
                 </ctrl:CustomListBox.Header>
                 <ctrl:CustomListBox.ToolBar>
                     <StackPanel>
-                        <Button Template="{StaticResource AddBtnTemplate}"
-                                ToolTip="Add Operation(s)"/>
+                        <Menu Background="Transparent" Width="35">
+                            <MenuItem Background="Transparent"
+                                      Padding="0"
+                                      x:Name="menuAddOpt">
+                                <MenuItem.Header>
+                                    <Image Source="{StaticResource icon-add}"/>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </Menu>
                         <Button Template="{StaticResource SaveBtnTemplate}"
-                                ToolTip="Save Recipe"/>
+                                ToolTip="Save Recipe"
+                                IsEnabled="False"/>
                         <Button Template="{StaticResource LoadBtnTemplate}"
-                                ToolTip="Load Recipe"/>
+                                ToolTip="Load Recipe"
+                                IsEnabled="False"/>
                         <Button Template="{StaticResource TrashBtnTemplate}"
-                                ToolTip="Clear Recipe"/>
+                                ToolTip="Clear Recipe"
+                                Command="{x:Static vm:BatchRenamerViewModel.RemoveOperatorCommand}"/>
                     </StackPanel>
                 </ctrl:CustomListBox.ToolBar>
+                <ctrl:CustomListBox.ListBox>
+                    <ListBox x:Name="boxRecipe"
+                             ItemsSource="{Binding Recipe}"
+                             ItemTemplateSelector="{StaticResource recipeTemplateSelector}"
+                             HorizontalContentAlignment="Stretch">
+                    </ListBox>
+                </ctrl:CustomListBox.ListBox>
             </ctrl:CustomListBox>
             <Button Name="renameBtn"
                     Grid.Row="1"
@@ -252,7 +271,7 @@
                     FontWeight="Bold"
                     FontSize="16"
                     Content="RENAME!"
-                    Click="RenameButton_Click"/>
+                    Command="{x:Static vm:BatchRenamerViewModel.RenameCommand}"/>
         </Grid>
     </Grid>
 </Window>
